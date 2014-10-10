@@ -11,8 +11,8 @@ Demo showing how Salesforce custom permissions can be used in a 3rd party applic
 5) run app `node app.js` or `foreman start`<br/>
 
 <strong>Use app</strong><br/>
-1) log in to salesforce using oauth: http://localhost:5000<br/>
+1) log in to salesforce using oauth: <a href='http://localhost:5000'>http://localhost:5000</a><br/>
 2) change user access by assigning permission sets with custom permissions to your user<br/>
-3) view default Expense Reports: http://localhost:5000/expenseReports<br/>
-4) view all permissions associated with connected app: http://localhost:5000/perms<br/>
-5) view raw json response from identity service: http://localhost:5000/id<br/>
+3) view default Expense Reports: <a href='http://localhost:5000/expenseReports'>http://localhost:5000/expenseReports</a><br/>
+4) view all permissions associated with connected app: <a href='http://localhost:5000/perms'>http://localhost:5000/perms</a><br/>
+5) view raw json response from identity service: <a href='http://localhost:5000/id'>http://localhost:5000/id</a><br/>
