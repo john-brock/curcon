@@ -76,7 +76,7 @@ app.get('/expenseReports/:id/:status', function(req, res) {
   var reportId = req.params.id;
   var status = req.params.status;
   getIdentity(req, res, function(resp) {
-    var canApprove = resp.custom_permissions.Curcon_Approve_Expense_Reports == true;
+    var canApprove = resp.custom_permissions.Curcon_Approve_Expense_Reports == true || resp.custom_permissions.Curcon__Curcon_Approve_Expense_Reports == true;
     if (canApprove) {
       ExpenseReport.findOne({ _id: reportId }).populate('owner').exec(function(err, report) {
         if (err) {
@@ -133,7 +133,7 @@ app.post('/expenseReports', function(req, res) {
   var description = req.body.description;
   var amount = req.body.amount;
   getIdentity(req, res, function(resp) {
-    var canCreate = resp.custom_permissions.Curcon_Create_Expense_Reports == true;
+    var canCreate = resp.custom_permissions.Curcon_Create_Expense_Reports == true || resp.custom_permissions.Curcon__Curcon_Create_Expense_Reports == true;
     if (canCreate) {
       User.findOne({ user_id: resp.user_id }, function(err, user) {
         if (null != user) {

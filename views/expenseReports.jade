@@ -8,10 +8,10 @@ include header
 - var userId = identity_resp['user_id']
 - var customPerms = identity_resp['custom_permissions']
 if (customPerms)
-	- var canViewExpenseReports = customPerms['Curcon_View_Expense_Reports']
-	- var canViewExpenseReportOwners = customPerms['Curcon_View_Expense_Report_Owner']
-	- var canCreateExpenseReports = customPerms['Curcon_Create_Expense_Reports']
-	- var canApproveExpenseReports = customPerms['Curcon_Approve_Expense_Reports']
+	- var canViewExpenseReports = customPerms['Curcon_View_Expense_Reports'] || customPerms['Curcon__Curcon_View_Expense_Reports']
+	- var canViewExpenseReportOwners = customPerms['Curcon_View_Expense_Report_Owner'] || customPerms['Curcon__Curcon_View_Expense_Report_Owner']
+	- var canCreateExpenseReports = customPerms['Curcon_Create_Expense_Reports'] || customPerms['Curcon__Curcon_Create_Expense_Reports']
+	- var canApproveExpenseReports = customPerms['Curcon_Approve_Expense_Reports'] || customPerms['Curcon__Curcon_Create_Expense_Reports']
 
 if canCreateExpenseReports == true
 	p(class="bold"). Create New Report
