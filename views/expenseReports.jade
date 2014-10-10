@@ -8,10 +8,10 @@ include header
 - var userId = identity_resp['user_id']
 - var customPerms = identity_resp['custom_permissions']
 if (customPerms)
-	- var canViewExpenseReports = customPerms['Curcon_View_Expense_Reports']
-	- var canViewExpenseReportOwners = customPerms['Curcon_View_Expense_Report_Owner']
-	- var canCreateExpenseReports = customPerms['Curcon_Create_Expense_Reports']
-	- var canApproveExpenseReports = customPerms['Curcon_Approve_Expense_Reports']
+	- var canViewExpenseReports = customPerms['Curcon_View_Expense_Reports'] || customPerms['Curcon__Curcon_View_Expense_Reports']
+	- var canViewExpenseReportOwners = customPerms['Curcon_View_Expense_Report_Owner'] || customPerms['Curcon__Curcon_View_Expense_Report_Owner']
+	- var canCreateExpenseReports = customPerms['Curcon_Create_Expense_Reports'] || customPerms['Curcon__Curcon_Create_Expense_Reports']
+	- var canApproveExpenseReports = customPerms['Curcon_Approve_Expense_Reports'] || customPerms['Curcon__Curcon_Approve_Expense_Reports']
 
 if canCreateExpenseReports == true
 	p(class="bold"). Create New Report
@@ -40,12 +40,15 @@ if canViewExpenseReports == true
 		- for (var report in reports)
 			tr
 				td
-					if canApproveExpenseReports == true && userId != reports[report].owner.user_id
-						- var approveUrl = "/expenseReports/" + reports[report]._id + "/Approved"
-						a(href=approveUrl) Approve
-						|  
-						- var rejectUrl = "/expenseReports/" + reports[report]._id + "/Rejected"
-						a(href=rejectUrl) Reject
+					if canApproveExpenseReports == true
+						if userId != reports[report].owner.user_id
+							- var approveUrl = "/expenseReports/" + reports[report]._id + "/Approved"
+							a(href=approveUrl) Approve
+							|  
+							- var rejectUrl = "/expenseReports/" + reports[report]._id + "/Rejected"
+							a(href=rejectUrl) Reject
+						else
+							p. (submitted by you)
 				td
 					p. #{report}
 				td
