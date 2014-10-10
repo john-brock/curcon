@@ -105,7 +105,6 @@ app.get('/expenseReports', function(req, res) {
       if (err) {
         res.send(500);
       } else if (reports.length == 0) {
-        console.log('no reports');
         addSampleReportsIfNeeded(resp.organization_id, function(err, message) {
           if (err) {
             res.send(500);
@@ -140,7 +139,7 @@ app.post('/expenseReports', function(req, res) {
         if (null != user) {
             createNewExpenseReport(description, amount, user, res);
         } else {
-          var owner = new User({ user_id: resp.user_id, organization_id: resp.organization_id, display_name: resp.display_name, email: resp.display_name});
+          var owner = new User({ user_id: resp.user_id, organization_id: resp.organization_id, display_name: resp.display_name, email: resp.email});
           owner.save(function(err, newUser) {
             createNewExpenseReport(description, amount, newUser, res);
           });
@@ -211,7 +210,6 @@ function getIdentity(req, res, callback) {
 
 function addSampleReportsIfNeeded(orgId, callback) {
   utils.createTestExpenseReports(orgId, function(err, message) {
-    console.log('Check expense reports');
     if (err) {
       console.log(err);
     } else {

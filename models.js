@@ -1,12 +1,14 @@
 var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-  user_id: { type: String, required: true, unique: true },
+  user_id: { type: String, required: true },
   display_name: { type: String, required: true},
   email: { type: String },
   organization_id: { type: String, required: true},
   expense_reports: [ { type: mongoose.Schema.Types.ObjectId, ref: 'ExpenseReport'} ]
 });
+
+userSchema.index({ organization_id: 1, user_id: 1 });
 
 var User = mongoose.model('User', userSchema);
 

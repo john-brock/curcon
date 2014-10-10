@@ -9,8 +9,7 @@ exports.createTestExpenseReports = function(orgId, callback) {
       console.log('Error querying Expense Reports');
     } else {
       if (reports.length == 0) {
-        console.log('no reports found');
-        User.find({}, function(err, users) {
+        User.find({'organization_id': orgId}, function(err, users) {
           if (err) {
             console.log('err');
             callback(err, null);
@@ -66,9 +65,9 @@ function createReportsWithOwners(userIdMap, orgId, callback) {
 
 function findOrCreateUser(r, orgId, callback) {
   var usersCreated = {};
-  User.findOne({ user_id: r.owner.user_id }, function (err, foundUser) {
+  User.findOne({ 'organization_id': orgId, 'user_id': r.owner.user_id }, function (err, foundUser) {
     if (null == foundUser && null == usersCreated[r.owner.user_id]) {
-      var newUser = new User({ user_id: r.owner.user_id, organization_id: r.owner.organization_id, display_name: r.owner.display_name, email: r.owner.email });
+      var newUser = new User({ user_id: r.owner.user_id, organization_id: orgId, display_name: r.owner.display_name, email: r.owner.email });
       newUser.save(function(err, newUser) {
         if (err) {
           callback(err, null);
