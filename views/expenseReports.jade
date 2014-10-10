@@ -1,0 +1,65 @@
+link(rel='stylesheet', href='/stylesheets/style.css')
+
+include header
+
+- var reports = JSON.parse(expense_reports)
+- var identity_resp = JSON.parse(identity)
+
+- var userId = identity_resp['user_id']
+- var customPerms = identity_resp['custom_permissions']
+if (customPerms)
+	- var canViewExpenseReports = customPerms['Curcon_View_Expense_Reports']
+	- var canViewExpenseReportOwners = customPerms['Curcon_View_Expense_Report_Owner']
+	- var canCreateExpenseReports = customPerms['Curcon_Create_Expense_Reports']
+	- var canApproveExpenseReports = customPerms['Curcon_Approve_Expense_Reports']
+
+if canCreateExpenseReports == true
+	p(class="bold"). Create New Report
+	form(action="/expenseReports" method="post")
+		input(type="text" placeholder="Description" name="description")
+		input(type="number" placeholder="Amount" name="amount" required=true)
+		input(type="submit" value="Submit Report")
+	<br/>
+if canViewExpenseReports == true 
+	p(class="bold"). Existing Reports
+	table
+		tr
+			td
+				p(class="bold"). Action
+			td
+				p(class="bold"). Report
+			td
+				p(class="bold"). Description
+			td
+				p(class="bold"). Amount
+			td
+				p(class="bold"). Submitted By
+			td
+				p(class="bold"). Status
+	table
+		- for (var report in reports)
+			tr
+				td
+					if canApproveExpenseReports == true && userId != reports[report].owner.user_id
+						- var approveUrl = "/expenseReports/" + reports[report]._id + "/Approved"
+						a(href=approveUrl) Approve
+						|  
+						- var rejectUrl = "/expenseReports/" + reports[report]._id + "/Rejected"
+						a(href=rejectUrl) Reject
+				td
+					p. #{report}
+				td
+					p. #{reports[report].description}
+				td
+					p. $#{reports[report].amount}
+				td
+					if canViewExpenseReportOwners == true
+						- var owner = reports[report].owner
+						a(href="https://login.salesforce.com/#{owner.user_id}") #{owner.display_name}
+				td
+					p. #{reports[report].status}
+else
+	div(class="error")
+		p You do not have access to view Expense Reports
+
+include footer

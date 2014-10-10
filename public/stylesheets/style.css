@@ -1,0 +1,30 @@
+body {
+	padding: 100px;
+	font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+	color: #00B7FF;
+	text-decoration: none;
+}
+
+div.error {
+	font-weight: bold;
+	color: red;
+}
+
+p.bold {
+	font-weight: bold;
+}
+
+p.small {
+	font-size: 12px;
+}
+
+td {
+	width: 10%
+}
+
+pre.smalltext {
+	font-size: 14px;
+}

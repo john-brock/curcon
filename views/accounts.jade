@@ -1,0 +1,40 @@
+link(rel='stylesheet', href='/stylesheets/style.css')
+
+include header
+
+- var accts = JSON.parse(account_list)
+- var perms = JSON.parse(custom_permissions)
+
+- var customPerms = perms['custom_permissions']
+if (customPerms)
+	- var hasAcctRead = customPerms['Perms_R_Us_Account_Read']
+	- var hasPhoneFls = customPerms['Perms_R_Us_Account_Phone_Fls']
+	- var hasEmailFls = customPerms['Perms_R_Us_Account_Email_Fls']
+
+if hasAcctRead == true 
+	table
+		tr
+			td
+				p(class="bold"). Account Name
+			td
+				p(class="bold"). Phone Number
+			td
+				p(class="bold"). Email
+
+	table
+		- for (var acct in accts)
+			tr
+				td
+					p. #{acct}
+				td
+					if hasPhoneFls == true
+						p. #{accts[acct].phone}
+				td
+					if hasEmailFls == true
+						p. #{accts[acct].email}
+
+else
+	div(class="error")
+		p You do not have access to View Accounts
+
+include footer

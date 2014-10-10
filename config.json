@@ -1,0 +1,5 @@
+{
+	"consumer_key": "PUT PUBLIC KEY HERE",
+	"consumer_secret": "PUT SECRET HERE",
+	"callback_url": "http://localhost:5000/oauth/_callback"
+}

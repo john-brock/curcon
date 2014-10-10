@@ -1,0 +1,21 @@
+link(rel='stylesheet', href='/stylesheets/style.css')
+
+include header
+
+- var perms = custom_permissions
+
+table
+	tr
+		td
+			p(class="bold"). Permission Name
+		td
+			p(class="bold"). Enabled
+
+table
+	- for (var perm in perms)
+		- var enabled = perms[perm]
+		tr
+			td #{perm}
+			td #{enabled}
+
+include footer
