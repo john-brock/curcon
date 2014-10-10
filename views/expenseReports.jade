@@ -40,14 +40,15 @@ if canViewExpenseReports == true
 		- for (var report in reports)
 			tr
 				td
-					if canApproveExpenseReports == true && userId != reports[report].owner.user_id
-						- var approveUrl = "/expenseReports/" + reports[report]._id + "/Approved"
-						a(href=approveUrl) Approve
-						|  
-						- var rejectUrl = "/expenseReports/" + reports[report]._id + "/Rejected"
-						a(href=rejectUrl) Reject
-					else
-						p. (submitted by you)
+					if canApproveExpenseReports == true
+						if userId != reports[report].owner.user_id
+							- var approveUrl = "/expenseReports/" + reports[report]._id + "/Approved"
+							a(href=approveUrl) Approve
+							|  
+							- var rejectUrl = "/expenseReports/" + reports[report]._id + "/Rejected"
+							a(href=rejectUrl) Reject
+						else
+							p. (submitted by you)
 				td
 					p. #{report}
 				td
